@@ -1,12 +1,14 @@
-frontkeystone
-=============
+# frontkeystone
 
-Pour installer (dans un virtualenv) :
-pip install python-keystoneclient
-pip install python-swiftclient
-pip install django
-git clone https://github.com/adrien-louis-r/frontos.git
+### Pour installer (dans un virtualenv) : 
+[Mettre en place un virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/ "virtualenv")
 
-Lancer Django :
-cd frontkeystone
-python manage.py runserver 127.0.0.1:8000
+    pip install python-keystoneclient
+    pip install python-swiftclient
+    pip install django
+    git clone https://github.com/adrien-louis-r/frontos.git
+
+### Lancer Django :  
+
+    cd frontos
+    python manage.py runserver
