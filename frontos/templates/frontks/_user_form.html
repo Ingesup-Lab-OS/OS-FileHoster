@@ -1,0 +1,17 @@
+{% csrf_token %}
+
+<label class="sr-only" for="username_input">Username</label>
+<input type="text" class="form-control" name="username" id="username_input" placeholder="Enter Username">
+
+<label class="sr-only" for="email_input">Email</label>
+<input type="text" class="form-control" name="email" id="email_input" placeholder="Email">
+
+<label class="sr-only" for="password_input">Password</label>
+<input type="password" class="form-control" name="password" id="password_input" placeholder="Password">
+
+<label class="sr-only" for="tenant_id">Tenant</label>
+<select class="form-control" name="tenant" id="tenant_id">
+{% for tenant in ksadmin.tenants.list %}
+    <option>{{ tenant.name }}</option>
+{% endfor %}
+</select>

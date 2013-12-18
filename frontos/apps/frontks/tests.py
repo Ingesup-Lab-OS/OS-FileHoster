@@ -1,3 +1,4 @@
 from django.test import TestCase
+from frontos.libs.utils import getAdminKeystone
 
-# Create your tests here.
+class KeystoneHelperTestCase(TestCase):
