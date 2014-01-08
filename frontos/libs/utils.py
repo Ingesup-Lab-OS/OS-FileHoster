@@ -1,11 +1,12 @@
+from django.conf import settings
 import keystoneclient.v2_0.client as ksclient
 
 class KeystoneHelper:
     def getKsadmin(self):
-        USER          = "admin"
-        PASS          = "pass"
-        TENANT_NAME   = "admin"
-        KEYSTONE_URL  = 'http://127.0.0.1:35357/v2.0'
+        USER          = settings.KEYSTONE_USER
+        PASS          = settings.KEYSTONE_PASS
+        TENANT_NAME   = settings.KEYSTONE_TENANT
+        KEYSTONE_URL  = settings.KEYSTONE_URL
 
 
         ksadmin = ksclient.Client(  

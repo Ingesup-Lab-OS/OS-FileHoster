@@ -8,6 +8,19 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
+try:
+   from local_settings import *
+except ImportError, e:
+    print
+    """ 
+    -------------------------------------------------------------------------
+     You need to create a local_settings.py file which needs to contain at least
+    database connection information.
+   
+    Copy local_settings_default.py to local_settings.py and edit it.
+    -------------------------------------------------------------------------
+    """
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))

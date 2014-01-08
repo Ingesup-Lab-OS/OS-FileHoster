@@ -40,3 +40,6 @@ Scripts
  
 # MacOSX
 .DS_Store
+
+#project specifics
+frontos/local_settings.py
