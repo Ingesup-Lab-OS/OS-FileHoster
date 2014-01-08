@@ -25,5 +25,5 @@ class KeystoneHelper:
                                 tenant_id=tenant.id,
                             )
 
-    def createKsuser(self, username, password, email, tenant):
+    def deleteKsuser(self, username, password, email, tenant):
         ksadmin.users.delete(user)
