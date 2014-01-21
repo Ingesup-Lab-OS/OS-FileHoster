@@ -43,3 +43,5 @@ Scripts
 
 #project specifics
 frontos/local_settings.py
+webapp/lib
+node_modules
