@@ -1,0 +1,16 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en" ng-app="myApp">
+	<head>
+        {% include '_head.html' %}
+	 	<meta charset="utf-8">
+	  	<title>Angular FFS</title>
+	</head>
+	<body ng-controller="MainCtrl">
+		{% verbatim %}
+		 <div>
+		    {{ text }}
+		 </div>
+		{% endverbatim %}
+	</body>
+</html>
