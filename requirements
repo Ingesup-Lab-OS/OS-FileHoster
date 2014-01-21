@@ -1,0 +1,4 @@
+Django>=1.5
+djangorestframework
+python-keystoneclient
+python-swiftclient
