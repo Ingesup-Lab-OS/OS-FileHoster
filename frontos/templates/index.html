@@ -1,16 +1,13 @@
-{% load staticfiles %}
-<!doctype html>
-<html lang="en" ng-app="myApp">
-	<head>
-        {% include '_head.html' %}
-	 	<meta charset="utf-8">
-	  	<title>Angular FFS</title>
-	</head>
-	<body ng-controller="MainCtrl">
-		{% verbatim %}
-		 <div>
-		    {{ text }}
-		 </div>
-		{% endverbatim %}
-	</body>
-</html>
+{% extends "base.html" %}
+{% block title %}{{ block.super }} | Home {% endblock %}
+
+{% block content %}
+<div class="center hero-unit">
+    <h1>
+        Front end keystone
+    </h1>
+	{% verbatim %}
+    <div ng-view></div>
+	{% endverbatim %}
+</div>
+{% endblock %}

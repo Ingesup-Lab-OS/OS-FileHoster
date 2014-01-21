@@ -1,9 +1,9 @@
-'use strict';
+var frontosControllers = angular.module('frontosControllers', []);
 
-var myApp = angular.module('myApp', []);
-
-myApp.controller('MainCtrl', ['$scope', function ($scope) {
-
-	$scope.text = 'Hello !';
-
-}]);
+frontosControllers.controller('UserListCtrl', ['$scope', '$http',
+	function ($scope, $http) {
+		$http.get('static/users.json').success(function(data) {
+			$scope.users = data;
+		});
+	}
+]);
