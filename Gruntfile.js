@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 				tasks: ['concat:angular'],
 			},
 			html: {
-				files: ['frontos/static/partials/*.html'],
+				files: ['frontos/static/partials/*.html', 'frontos/static/partials/**/*.html', 'frontos/templates/*.html', 'frontos/templates/**/*.html'],
 				tasks: [],
 			}
 		},
