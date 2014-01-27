@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="frontos">
     <head>
         {% include '_head.html' %}
         <title>{% block title %}Keystone{% endblock %}</title>
@@ -11,4 +11,7 @@
             {% block content %}{% endblock %}
         </div>
     </body>
+    <footer>
+        {% include '_footer.html' %}
+    </footer>
 </html>

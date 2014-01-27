@@ -1,0 +1,9 @@
+{
+  "name": "frontos",
+  "devDependencies": {
+    "grunt": "",
+    "grunt-contrib-watch": "",
+    "grunt-contrib-concat": "",
+    "grunt-contrib-uglify": ""
+  }
+}

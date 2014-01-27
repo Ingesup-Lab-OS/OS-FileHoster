@@ -12,11 +12,11 @@ try:
    from local_settings import *
 except ImportError, e:
     print
-    """ 
+    """
     -------------------------------------------------------------------------
      You need to create a local_settings.py file which needs to contain at least
     database connection information.
-   
+
     Copy local_settings_default.py to local_settings.py and edit it.
     -------------------------------------------------------------------------
     """
@@ -43,12 +43,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.auth',
+    # 'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
+    # 'django.contrib.messages',
     'django.contrib.staticfiles',
     'frontos.apps.frontks',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -68,7 +69,17 @@ WSGI_APPLICATION = 'frontos.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-DATABASES = {}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'frontos.sqlite',  # Or path to database file if using sqlite3.
+        # The following settings are not used with sqlite3:
+        'USER': 'frontos',
+        'PASSWORD': '',
+        'HOST': '',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',  # Set to empty string for default.
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

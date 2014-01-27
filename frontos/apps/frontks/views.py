@@ -1,15 +1,28 @@
 from django.shortcuts import get_object_or_404, render
 from frontos.libs.utils import KeystoneHelper
+import json
+from django.http import HttpResponse
 
 kshelper = KeystoneHelper()
+users = [
+    {
+        "id": "1",
+        "username": "adrien",
+        "email": "adrien.louis.r@gmail.com"
+    },
+    {
+        "id": "2",
+        "username": "arnaud",
+        "email": "arnaud.cavat@y-nov.com"
+    }
+]
 
 def index(request):
-    return render(request, 'frontks/index.html')
+    return HttpResponse(json.dumps(users), content_type="application/json")
 
 def user_show(request):
-    ksadmin = kshelper.getKsadmin()
-    userlist = ksadmin.users.list
-    return render(request, 'frontks/user.html', {'userlist':userlist})
+    user_id = int(request.GET.get('user_id', )) - 1
+    return HttpResponse(json.dumps(users[user_id]), content_type="application/json")
 
 def user_create(request):
     ksadmin = kshelper.getKsadmin()
@@ -21,7 +34,7 @@ def user_create(request):
         email = request.POST.get('email', '')
         tenants = ksadmin.tenants.list()
         tenant = [x for x in tenants if x.name=='demo'][0]
-        
+
         kshelper.createKsuser(user, password, email, tenant)
         return HttpResponseRedirect(reverse('frontks:user'))
 
@@ -41,6 +54,6 @@ def user_delete(request):
         username = request.POST.get('username', '')
         users = ksadmin.users.list()
         user = [x for x in users if x.name==username][0]
-        
+
         kshelper.deleteKsuser(user)
         return HttpResponseRedirect(reverse('frontks:user'))

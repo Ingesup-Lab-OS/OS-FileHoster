@@ -1,26 +1,29 @@
-# frontkeystone
+FrontOS
+=======
+OpenStack keystone front-end
 
-### Utilisation de git avec git flow :
+### This project is using git flow :
+[What and why](http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/ "why git-flow")
 [Installation](https://github.com/nvie/gitflow/wiki/Installation/ "git-flow")
 
-[Le pourquoi du comment](http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/ "why git-flow")
+### Dev installation :
 
-Ne pas oublier après le clone : 
-
+    git clone https://github.com/adrien-louis-r/frontos.git
+    cd frontos
     git checkout develop
+
+[Setting up a virtualenv][1]
+
+    pip install -r requirements
+
+    bower install
+    npm install
+
+### Start frontos :
+
+    python manage.py runserver
 
 ### Ingesup DNS
     10.16.144.40
-    
-### Pour installer (dans un virtualenv) : 
-[Mettre en place un virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/ "virtualenv")
 
-    pip install python-keystoneclient
-    pip install python-swiftclient
-    pip install django
-    git clone https://github.com/adrien-louis-r/frontos.git
-
-### Lancer Django :  
-
-    cd frontos
-    python manage.py runserver
+  [1]: http://docs.python-guide.org/en/latest/dev/virtualenvs/ "virtualenv"

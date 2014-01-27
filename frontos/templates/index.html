@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }} | Home {% endblock %}
+
+{% block content %}
+<div class="center hero-unit">
+    <h1>
+        Front end keystone
+    </h1>
+	{% verbatim %}
+    <div ng-view></div>
+	{% endverbatim %}
+</div>
+{% endblock %}
