@@ -113,3 +113,5 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates').replace('\\','/'),
 )
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"

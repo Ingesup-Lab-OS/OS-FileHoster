@@ -4,21 +4,49 @@ import json
 from django.http import HttpResponse
 
 kshelper = KeystoneHelper()
-users = [
-    {
-        "id": "1",
-        "username": "adrien",
-        "email": "adrien.louis.r@gmail.com"
-    },
-    {
-        "id": "2",
-        "username": "arnaud",
-        "email": "arnaud.cavat@y-nov.com"
-    }
-]
+ksadmin = kshelper.getKsadmin()
+# users = [
+#     {
+#         "id": "1",
+#         "username": "adrien",
+#         "email": "adrien.louis.r@gmail.com"
+#     },
+#     {
+#         "id": "2",
+#         "username": "arnaud",
+#         "email": "arnaud.cavat@y-nov.com"
+#     }
+# ]
+
+authenticate = {
+    "authenticated": False
+}
 
 def index(request):
-    return HttpResponse(json.dumps(users), content_type="application/json")
+    users = ksadmin.users.list()
+    user_list = []
+    for user in users:
+        user = {
+            "id": user.id,
+            "username": user.username,
+            "name": user.name,
+            "email": user.email,
+            "enabled": user.enabled
+        }
+        user_list.append(user)
+
+    return HttpResponse(json.dumps(user_list), content_type="application/json")
+
+def user_login(request):
+    data = json.loads(request.body)
+    username = data['username']
+    password = data['password']
+    ksadmin = kshelper.getKsadminFromCredentials(username, password)
+    if ksadmin:
+        request.session['authenticated'] = True
+        authenticate['authenticated'] = True
+
+    return HttpResponse(json.dumps(authenticate), content_type="application/json")
 
 def user_show(request):
     user_id = int(request.GET.get('user_id', )) - 1

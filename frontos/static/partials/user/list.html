@@ -1,21 +1,17 @@
-<div class="container-fluid">
-	<div class="row-fluid">
-		<div class="span2">
-		<!--Sidebar content-->
-			Search: <input ng-model="query">
-		</div>
-		<div class="span10">
-		<!--Body content-->
+<div class="row">
 
-			<ul class="users">
-				<li ng-repeat="user in users | filter:query">
-					<p>
-					<a href="#user/{{user.id}}">{{user.username}}</a>
-					</p>
-					<p>{{user.email}}</p>
-				</li>
-			</ul>
-
-		</div>
+	<div class="col-md-2">
+		Search: <input ng-model="query">
 	</div>
+	<div class="col-md-10">
+		<ul class="list-unstyled">
+			<li ng-repeat="user in users | filter:query">
+				<p>
+					<a href="#user/{{user.id}}">{{user.username}}</a>
+				</p>
+				<p>{{user.email}}</p>
+			</li>
+		</ul>
+	</div>
+
 </div>
