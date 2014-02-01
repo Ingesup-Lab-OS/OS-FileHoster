@@ -26,6 +26,7 @@ def index(request):
     users = ksadmin.users.list()
     user_list = []
     for user in users:
+        # print user._info
         user = {
             "id": user.id,
             "username": user.username,
@@ -85,3 +86,8 @@ def user_delete(request):
 
         kshelper.deleteKsuser(user)
         return HttpResponseRedirect(reverse('frontks:user'))
+
+def file_new(request):
+    if request.method == 'POST':
+        print request.FILES
+    return HttpResponse(json.dumps([{"done": True}]), content_type="application/json")

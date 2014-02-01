@@ -1,15 +1,16 @@
+(function () {
 "use strict";
 
-var frontosControllers = angular.module('frontosControllers', []);
+var controllers = angular.module('frontos.controllers', []);
 
-frontosControllers.controller('UserListCtrl', ['$scope', '$http',
+controllers.controller('UserListCtrl', ['$scope', '$http',
 	function ($scope, $http) {
 		$http.get('/frontks').success(function(data) {
 			$scope.users = data;
 		});
 	}]);
 
-frontosControllers.controller('UserLoginCtrl', ['$scope', '$http', 'UserService',
+controllers.controller('UserLoginCtrl', ['$scope', '$http', 'UserService',
 	function ($scope, $http, User) {
 		$scope.credentials = {};
 		$scope.auth = User.isLogged;
@@ -28,7 +29,7 @@ frontosControllers.controller('UserLoginCtrl', ['$scope', '$http', 'UserService'
 		};
 	}]);
 
-frontosControllers.controller('UserShowCtrl', ['$scope', '$http' , "$routeParams",
+controllers.controller('UserShowCtrl', ['$scope', '$http' , "$routeParams",
 	function ($scope, $http, $routeParams) {
 		$http.get('/frontks/user', {params: {user_id: $routeParams.id}})
 		.success(function(data) {
@@ -36,3 +37,25 @@ frontosControllers.controller('UserShowCtrl', ['$scope', '$http' , "$routeParams
 		});
 	}]);
 
+controllers.controller('FileUploadCtrl',
+	['$scope', '$rootScope', 'uploadManager',
+	function ($scope, $rootScope, uploadManager) {
+		$scope.files = [];
+		$scope.percentage = 0;
+
+		$scope.upload = function () {
+			uploadManager.upload();
+			$scope.files = [];
+		};
+
+		$rootScope.$on('fileAdded', function (e, call) {
+			$scope.files.push(call);
+			$scope.$apply();
+		});
+
+		$rootScope.$on('uploadProgress', function (e, call) {
+			$scope.percentage = call;
+			$scope.$apply();
+		});
+	}]);
+})();

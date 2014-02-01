@@ -1,23 +1,23 @@
+(function() {
 "use strict";
 
 var frontosApp = angular.module('frontos', [
 	'ngRoute',
-	'frontosControllers',
-	'frontosServices',
-	'frontosDirectives'
+	'frontos.controllers',
+	'frontos.services',
+	'frontos.directives'
 ]);
 
 frontosApp.constant('urls', {
 	user_login: 'static/partials/user/login.html',
 	user_list: 'static/partials/user/list.html',
+	file_new: 'static/partials/file/new.html',
 	user_show: 'static/partials/user/show.html'
 });
 
 frontosApp.config(['$httpProvider', '$locationProvider', '$routeProvider', 'urls',
 	function($httpProvider, $locationProvider, $routeProvider, urls) {
 		$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-		$httpProvider.defaults.xsrfCookieName = 'csrftoken';
-		$httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 		// $locationProvider.html5Mode(true).hashPrefix('!');
 		$routeProvider.
 			when('/login', {
@@ -32,9 +32,12 @@ frontosApp.config(['$httpProvider', '$locationProvider', '$routeProvider', 'urls
 				templateUrl: urls.user_show,
 				controller: 'UserShowCtrl'
 			}).
-
+			when('/file/new', {
+				templateUrl: urls.file_new,
+				controller: 'FileUploadCtrl'
+			}).
 			otherwise({
 				redirectTo: '/'
 			});
 	}]);
-
+})();
