@@ -1,13 +1,19 @@
-<lvl-file-upload
-   auto-upload='false'
-   choose-file-button-text='Choose files'
-   upload-file-button-text='Upload files'
-   upload-url='http://127.0.0.1:8000/frontks/files/new/'
-   max-files='10'
-   max-file-size-mb='50'
-   get-additional-data='getData(files)'
-   on-done='done(files, data)'
-   on-progress='progress(percentDone)'
-   on-error='error(files, type, msg)'/>
+<!-- <input type="file" ng-file-select="onFileSelect($files)" multiple> -->
 
+<div class="file-drop" ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class" ng-show="dropSupported">
+	<div>
+		<strong>drop files here</strong>
+	</div>
+</div>
 
+<div ng-file-drop-available="dropSupported=true" ng-show="!dropSupported">
+	<input type="file" ng-file-select="onFileSelect($files)" >
+</div></br>
+
+<div class="progress">
+	<div class="progress-bar" role="progressbar" aria-valuenow="{{ percentDone }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percentDone }}%;">
+		<span>{{ percentDone }}% Complete</span>
+	</div>
+</div>
+
+<button class="btn btn-danger" ng-click="upload.abort()">Cancel Upload</button>

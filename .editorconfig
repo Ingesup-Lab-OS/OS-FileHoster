@@ -14,10 +14,16 @@ indent_size = 4
 # Tab indentation (no size specified)
 [*.js]
 indent_style = tab
+indent_size = 2
 
 # Indentation override for all JS under lib directory
 [lib/**.js]
 indent_style = space
+indent_size = 2
+
+# Indentation override for html
+[*.html]
+indent_style = tab
 indent_size = 2
 
 # Matches the exact files package.json and .travis.yml

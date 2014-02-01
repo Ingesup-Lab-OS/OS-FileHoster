@@ -18,6 +18,8 @@ frontosApp.constant('urls', {
 frontosApp.config(['$httpProvider', '$locationProvider', '$routeProvider', 'urls',
 	function($httpProvider, $locationProvider, $routeProvider, urls) {
 		$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+		$httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+		$httpProvider.defaults.xsrfCookieName = 'csrftoken';
 		// $locationProvider.html5Mode(true).hashPrefix('!');
 		$routeProvider.
 			when('/login', {
@@ -32,7 +34,7 @@ frontosApp.config(['$httpProvider', '$locationProvider', '$routeProvider', 'urls
 				templateUrl: urls.user_show,
 				controller: 'UserShowCtrl'
 			}).
-			when('/file/new', {
+			when('/uploader', {
 				templateUrl: urls.file_new,
 				controller: 'FileUploadCtrl'
 			}).

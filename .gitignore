@@ -43,6 +43,6 @@ Scripts
 
 #project specifics
 frontos/local_settings.py
-webapp/lib
+frontos/static/vendors
 node_modules
 *.sqlite

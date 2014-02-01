@@ -1,7 +1,7 @@
 (function () {
-"use strict";
+	"use strict";
 
-var controllers = angular.module('frontos.controllers', []);
+var controllers = angular.module('frontos.controllers', ['angularFileUpload']);
 
 controllers.controller('UserListCtrl', ['$scope', '$http',
 	function ($scope, $http) {
@@ -37,35 +37,37 @@ controllers.controller('UserShowCtrl', ['$scope', '$http' , "$routeParams",
 		});
 	}]);
 
-controllers.controller('FileUploadCtrl', ['$scope',
-	function($scope) {
-	      $scope.progress = function(percentDone) {
-	            console.log("progress: " + percentDone + "%");
-	      };
 
-	      $scope.done = function(files, data) {
-	            console.log("upload complete");
-	            console.log("data: " + JSON.stringify(data));
-	            writeFiles(files);
-	      };
-
-	      $scope.getData = function(files) {
-	            //this data will be sent to the server with the files
-	            return {msg: "from the client", date: new Date()};
-	      };
-
-	      $scope.error = function(files, type, msg) {
-	            console.log("Upload error: " + msg);
-	            console.log("Error type:" + type);
-	            writeFiles(files);
-	      }
-
-	      function writeFiles(files)
-	      {
-	            console.log('Files')
-	            for (var i = 0; i < files.length; i++) {
-	                  console.log('\t' + files[i].name);
-	            }
-	      }
+controllers.controller('FileUploadCtrl', [ '$scope', '$upload',
+	function($scope, $upload) {
+		$scope.percentDone = 0;
+		$scope.onFileSelect = function($files) {
+			//$files: an array of files selected, each file has name, size, and type.
+			for (var i = 0; i < $files.length; i++) {
+				var file = $files[i];
+				$scope.percentDone = 0;
+				$scope.upload = $upload.upload({
+					url: 'frontks/files/new/', //upload.php script, node.js route, or servlet url
+					method: 'POST',
+					headers: { "Content-Type": file.type },
+					// withCredential: true,
+					data: {myObj: $scope.myModelObj},
+					file: file,
+					// file: $files, //upload multiple files, this feature only works in HTML5 FromData browsers
+					/* set file formData name for 'Content-Desposition' header. Default: 'file' */
+					//fileFormDataName: myFile, //OR for HTML5 multiple upload only a list: ['name1', 'name2', ...]
+					/* customize how data is added to formData. See #40#issuecomment-28612000 for example */
+					//formDataAppender: function(formData, key, val){}
+				}).progress(function(ev) {
+					$scope.percentDone = parseInt(100.0 * ev.loaded / ev.total);
+					console.log('percent: ' + $scope.percentDone);
+				}).success(function(data) {
+					console.log('data :');
+					console.log(data);
+				}).error(function(data) {
+				    //error
+				});
+			}
+		};
 	}]);
 })();

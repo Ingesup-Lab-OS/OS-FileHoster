@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 			},
 			js: {
 				files: ['frontos/static/js/app/*.js'],
-				tasks: ['concat:angular', 'concat:libs'],
+				tasks: ['concat'],
 			},
 			html: {
 				files: [
@@ -38,6 +38,8 @@ module.exports = function(grunt) {
 						'frontos/static/vendors/angular/angular.min.js',
 						'frontos/static/vendors/angular-resource/angular-resource.min.js',
 						'frontos/static/vendors/angular-route/angular-route.min.js',
+						'frontos/static/vendors/ng-file-upload/angular-file-upload-shim.min.js',
+						'frontos/static/vendors/ng-file-upload/angular-file-upload.min.js',
 					]
 				}
 			}
