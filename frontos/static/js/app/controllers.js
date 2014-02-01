@@ -37,25 +37,35 @@ controllers.controller('UserShowCtrl', ['$scope', '$http' , "$routeParams",
 		});
 	}]);
 
-controllers.controller('FileUploadCtrl',
-	['$scope', '$rootScope', 'uploadManager',
-	function ($scope, $rootScope, uploadManager) {
-		$scope.files = [];
-		$scope.percentage = 0;
+controllers.controller('FileUploadCtrl', ['$scope',
+	function($scope) {
+	      $scope.progress = function(percentDone) {
+	            console.log("progress: " + percentDone + "%");
+	      };
 
-		$scope.upload = function () {
-			uploadManager.upload();
-			$scope.files = [];
-		};
+	      $scope.done = function(files, data) {
+	            console.log("upload complete");
+	            console.log("data: " + JSON.stringify(data));
+	            writeFiles(files);
+	      };
 
-		$rootScope.$on('fileAdded', function (e, call) {
-			$scope.files.push(call);
-			$scope.$apply();
-		});
+	      $scope.getData = function(files) {
+	            //this data will be sent to the server with the files
+	            return {msg: "from the client", date: new Date()};
+	      };
 
-		$rootScope.$on('uploadProgress', function (e, call) {
-			$scope.percentage = call;
-			$scope.$apply();
-		});
+	      $scope.error = function(files, type, msg) {
+	            console.log("Upload error: " + msg);
+	            console.log("Error type:" + type);
+	            writeFiles(files);
+	      }
+
+	      function writeFiles(files)
+	      {
+	            console.log('Files')
+	            for (var i = 0; i < files.length; i++) {
+	                  console.log('\t' + files[i].name);
+	            }
+	      }
 	}]);
 })();

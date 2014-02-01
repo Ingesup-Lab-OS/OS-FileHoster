@@ -34,13 +34,10 @@ module.exports = function(grunt) {
 			},
 			libs:{
 				files: {
-					'frontos/static/js/dest/lib.js': [
-						'frontos/static/js/lib/angular/angular.js',
-						'frontos/static/js/lib/angular-resource/angular-resource.js',
-						'frontos/static/js/lib/angular-route/angular-route.js',
-						'frontos/static/js/lib/jquery/jquery.min.js',
-						'frontos/static/js/lib/jquery-file-upload/js/vendor/jquery.ui.widget.js',
-						'frontos/static/js/lib/jquery-file-upload/js/jquery.fileupload.js',
+					'frontos/static/js/dest/libs.js': [
+						'frontos/static/vendors/angular/angular.min.js',
+						'frontos/static/vendors/angular-resource/angular-resource.min.js',
+						'frontos/static/vendors/angular-route/angular-route.min.js',
 					]
 				}
 			}
