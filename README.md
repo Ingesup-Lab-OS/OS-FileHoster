@@ -23,7 +23,7 @@ OpenStack keystone front-end
 
     python manage.py runserver
 
-### Ingesup DNS
+### Ingesup DNS / host
     10.16.144.40
-
+    10.16.122.11    osctrl01.lab-os.lan
   [1]: http://docs.python-guide.org/en/latest/dev/virtualenvs/ "virtualenv"

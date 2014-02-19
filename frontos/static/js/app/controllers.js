@@ -13,13 +13,14 @@ controllers.controller('UserListCtrl', ['$scope', '$http',
 controllers.controller('UserLoginCtrl', ['$scope', '$http', 'UserService',
 	function ($scope, $http, User) {
 		$scope.credentials = {};
-		$scope.auth = User.isLogged;
+		$scope.user = User;
+		$scope.auth_token = 'unkown';
 		$scope.submit = function() {
 			if (this.credentials) {
 				$http.post('/frontks/user/login', this.credentials)
 				.success(function(data, status, headers, config) {
-					User.isLogged = data.authenticated;
-					$scope.auth = data.authenticated;
+					$scope.user.isLogged = data.authenticated;
+					$scope.auth_token = data.auth_token;
 					User.username = 'admin';
 				})
 				.error(function(data) {

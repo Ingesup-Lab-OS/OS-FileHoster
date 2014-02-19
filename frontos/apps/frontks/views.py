@@ -1,28 +1,14 @@
 from django.shortcuts import get_object_or_404, render
 from frontos.libs.utils import KeystoneHelper
+from frontos.libs.utils import SwiftHelper
 import json
 from django.http import HttpResponse
 
 kshelper = KeystoneHelper()
-ksadmin = kshelper.getKsadmin()
-# users = [
-#     {
-#         "id": "1",
-#         "username": "adrien",
-#         "email": "adrien.louis.r@gmail.com"
-#     },
-#     {
-#         "id": "2",
-#         "username": "arnaud",
-#         "email": "arnaud.cavat@y-nov.com"
-#     }
-# ]
-
-authenticate = {
-    "authenticated": False
-}
+swifthelper = SwiftHelper()
 
 def index(request):
+    ksadmin = kshelper.getKsadmin()
     users = ksadmin.users.list()
     user_list = []
     for user in users:
@@ -39,15 +25,16 @@ def index(request):
     return HttpResponse(json.dumps(user_list), content_type="application/json")
 
 def user_login(request):
-    data = json.loads(request.body)
-    username = data['username']
-    password = data['password']
+    data = {}
+    post = json.loads(request.body)
+    username = post['username']
+    password = post['password']
     ksadmin = kshelper.getKsadminFromCredentials(username, password)
     if ksadmin:
         request.session['authenticated'] = True
-        authenticate['authenticated'] = True
-
-    return HttpResponse(json.dumps(authenticate), content_type="application/json")
+        data['authenticated'] = True
+        data['auth_token'] = ksadmin.auth_token
+    return HttpResponse(json.dumps(data), content_type="application/json")
 
 def user_show(request):
     user_id = int(request.GET.get('user_id', )) - 1
@@ -90,4 +77,7 @@ def user_delete(request):
 def file_new(request):
     if request.method == 'POST':
         print request.FILES
+        # c.http_connection = self.fake_http_connection(200)
+        # args = ('http://www.test.com', 'asdf', 'asdf', 'asdf', 'asdf')
+        # value = c.put_object(*args)
     return HttpResponse(json.dumps([{"done": True}]), content_type="application/json")
