@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Login</title>
-	</head>
-	<body>
-		<form action="." method="POST">{% csrf_token %}
-			{{ form.as_p }}
-			<input type="submit" value="Submit">
-		</form>
-	</body>
-</html>
+{% extends "layout.html" %}
+{% block title %}{{ block.super }} | Login {% endblock %}
+
+{% block content %}
+<form action="." method="POST">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="Submit">
+</form>
+{% endblock %}

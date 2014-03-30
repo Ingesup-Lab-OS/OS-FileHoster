@@ -25,7 +25,7 @@ except ImportError, e:
 import os
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-LOGIN_REDIRECT_URL = "/static/index.html"
+LOGIN_REDIRECT_URL = "/"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
