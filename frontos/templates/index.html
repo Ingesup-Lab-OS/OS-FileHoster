@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="eng" ng-app="frontos">
+	<head>
+		<ng-include src="'./_head.html'"></ng-include>
+		<title>Keystone</title>
+	</head>
+
+	<body>
+		<ng-include src="'./_header.html'"></ng-include>
+		<div class="container">
+				<ng-include src="home.html"></ng-include>
+				<div ng-view></div>
+		</div>
+		<footer>
+			<script src="./js/dest/libs.js"></script>
+			<script src="./js/dest/app.js"></script>
+		</footer>
+	</body>
+</html>

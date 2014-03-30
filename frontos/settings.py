@@ -25,6 +25,7 @@ except ImportError, e:
 import os
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
+LOGIN_REDIRECT_URL = "/static/index.html"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -43,13 +44,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    # 'django.contrib.auth',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     # 'django.contrib.messages',
+    'openstack_auth',
     'django.contrib.staticfiles',
     'frontos.apps.frontks',
-    'rest_framework',
+    # 'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -65,6 +67,8 @@ ROOT_URLCONF = 'frontos.urls'
 
 WSGI_APPLICATION = 'frontos.wsgi.application'
 
+AUTHENTICATION_BACKENDS = ('openstack_auth.backend.KeystoneBackend',)
+OPENSTACK_KEYSTONE_URL = "http://10.31.92.166:5000/v2.0"
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
@@ -115,3 +119,4 @@ TEMPLATE_DIRS = (
 )
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+

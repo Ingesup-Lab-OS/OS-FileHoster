@@ -9,6 +9,7 @@ swifthelper = SwiftHelper()
 
 def index(request):
     ksadmin = kshelper.getKsadmin()
+    print ksadmin.users.list()
     users = ksadmin.users.list()
     user_list = []
     for user in users:
@@ -17,7 +18,6 @@ def index(request):
             "id": user.id,
             "username": user.username,
             "name": user.name,
-            "email": user.email,
             "enabled": user.enabled
         }
         user_list.append(user)
@@ -77,6 +77,9 @@ def user_delete(request):
 def file_new(request):
     if request.method == 'POST':
         print request.FILES
+        for filename, file in request.FILES.iteritems():
+                print request.FILES[filename].name
+                print request.FILES[filename].size
         # c.http_connection = self.fake_http_connection(200)
         # args = ('http://www.test.com', 'asdf', 'asdf', 'asdf', 'asdf')
         # value = c.put_object(*args)

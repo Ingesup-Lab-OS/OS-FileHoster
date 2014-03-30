@@ -5,7 +5,7 @@ var controllers = angular.module('frontos.controllers', ['angularFileUpload']);
 
 controllers.controller('UserListCtrl', ['$scope', '$http',
 	function ($scope, $http) {
-		$http.get('/frontks').success(function(data) {
+		$http.get('http://127.0.0.1:8000/frontks').success(function(data) {
 			$scope.users = data;
 		});
 	}]);
@@ -17,7 +17,7 @@ controllers.controller('UserLoginCtrl', ['$scope', '$http', 'UserService',
 		$scope.auth_token = 'unkown';
 		$scope.submit = function() {
 			if (this.credentials) {
-				$http.post('/frontks/user/login', this.credentials)
+				$http.post('http://127.0.0.1:8000/frontks/user/login', this.credentials)
 				.success(function(data, status, headers, config) {
 					$scope.user.isLogged = data.authenticated;
 					$scope.auth_token = data.auth_token;
@@ -48,7 +48,7 @@ controllers.controller('FileUploadCtrl', [ '$scope', '$upload',
 				var file = $files[i];
 				$scope.percentDone = 0;
 				$scope.upload = $upload.upload({
-					url: 'frontks/files/new/', //upload.php script, node.js route, or servlet url
+					url: 'http://127.0.0.1:8000/frontks/files/new/', //upload.php script, node.js route, or servlet url
 					method: 'POST',
 					headers: { "Content-Type": file.type },
 					// withCredential: true,
@@ -66,7 +66,7 @@ controllers.controller('FileUploadCtrl', [ '$scope', '$upload',
 					console.log('data :');
 					console.log(data);
 				}).error(function(data) {
-				    //error
+						//error
 				});
 			}
 		};

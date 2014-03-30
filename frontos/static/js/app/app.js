@@ -9,15 +9,15 @@ var frontosApp = angular.module('frontos', [
 ]);
 
 frontosApp.constant('urls', {
-	user_login: 'static/partials/user/login.html',
-	user_list: 'static/partials/user/list.html',
-	file_new: 'static/partials/file/new.html',
-	user_show: 'static/partials/user/show.html'
+	user_login: 'partials/user/login.html',
+	user_list: 'partials/user/list.html',
+	file_new: 'partials/file/new.html',
+	user_show: 'partials/user/show.html'
 });
 
 frontosApp.config(['$httpProvider', '$locationProvider', '$routeProvider', 'urls',
 	function($httpProvider, $locationProvider, $routeProvider, urls) {
-		$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+		delete $httpProvider.defaults.headers.common['X-Requested-With'];
 		$httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 		$httpProvider.defaults.xsrfCookieName = 'csrftoken';
 		// $locationProvider.html5Mode(true).hashPrefix('!');
