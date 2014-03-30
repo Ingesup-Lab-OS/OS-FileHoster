@@ -89,7 +89,7 @@ input {
   height: auto !important;
 }
 
-.file-drop {
+/*.file-drop {
   width: 100%;
   min-height: 150px;
   background-color:#eee;
@@ -107,4 +107,4 @@ input {
   display: inline-block;
   vertical-align: middle;
   line-height: normal;
-}
+}*/

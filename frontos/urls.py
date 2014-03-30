@@ -3,6 +3,6 @@ from django.views.generic import TemplateView
 
 urlpatterns = patterns('',
     url(r'^$', TemplateView.as_view(template_name='index.html'), name="index"),
-    url(r'^frontks', include('frontos.apps.frontks.urls', namespace="frontks")),
+    url(r'', include('frontos.apps.frontks.urls')),
     url(r'', include('openstack_auth.urls')),
 )
