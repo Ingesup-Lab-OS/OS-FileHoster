@@ -2,7 +2,7 @@
 {% block title %}{{ block.super }} | Login {% endblock %}
 
 {% block content %}
-<form action="." method="POST">
+<form action="/login/" method="POST">
 	{% csrf_token %}
 	{{ form.as_p }}
 	<input type="submit" value="Submit">
