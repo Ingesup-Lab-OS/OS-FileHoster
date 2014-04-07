@@ -25,7 +25,7 @@ except ImportError, e:
 import os
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/session_auth_token"
 LOGIN_URL="/login"
 
 # Quick-start development settings - unsuitable for production
@@ -48,11 +48,10 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    # 'django.contrib.messages',
+    'django.contrib.messages',
     'openstack_auth',
     'django.contrib.staticfiles',
-    'frontos.apps.frontks',
-    # 'rest_framework',
+    'OSFileHoster.apps.FileManager',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -64,9 +63,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'frontos.urls'
+ROOT_URLCONF = 'OSFileHoster.urls'
 
-WSGI_APPLICATION = 'frontos.wsgi.application'
+WSGI_APPLICATION = 'OSFileHoster.wsgi.application'
 
 AUTHENTICATION_BACKENDS = ('openstack_auth.backend.KeystoneBackend',)
 OPENSTACK_KEYSTONE_URL = "http://10.31.92.166:5000/v2.0"
@@ -75,15 +74,6 @@ OPENSTACK_KEYSTONE_URL = "http://10.31.92.166:5000/v2.0"
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'frontos.sqlite',  # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': 'frontos',
-        'PASSWORD': '',
-        'HOST': '',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',  # Set to empty string for default.
-    }
 }
 
 # Internationalization

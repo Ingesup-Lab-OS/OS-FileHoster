@@ -16,6 +16,12 @@ class KeystoneHelper:
             auth_url=self.KEYSTONE_URL,
          )
         return ksadmin
+    def getKsadminFomTokenId(self, token_id):
+        client = ksclient.Client(
+            endpoint=self.KEYSTONE_URL,
+            token=token_id,
+        )
+        return client
 
     def getKsadminFromCredentials(self, username, password):
         ksadmin = ksclient.Client(
@@ -41,8 +47,9 @@ class SwiftHelper:
     USER          = settings.KEYSTONE_USER
     PASS          = settings.KEYSTONE_PASS
     TENANT_NAME   = settings.KEYSTONE_TENANT
+    SWIFT_URL  = settings.SWIFT_URL
     KEYSTONE_URL  = settings.KEYSTONE_URL
 
     def putFile(self, auth_token, container, name, fileContent):
-        args = ('http://www.test.com', auth_content, container, name, fileContent)
+        args = (settings.SWIFT_URL, auth_token, container, name, fileContent)
         value = swiftclient.put_object(*args)

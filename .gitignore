@@ -42,7 +42,7 @@ Scripts
 .DS_Store
 
 #project specifics
-frontos/local_settings.py
-frontos/static/vendors
+OSFileHoster/local_settings.py
+OSFileHoster/static/vendors
 node_modules
 *.sqlite
