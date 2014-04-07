@@ -1,6 +1,6 @@
-OSFileHoster
-=======
-OpenStack keystone front-end
+# OS-FileHoster
+
+OpenStack one-link file hosting service.
 
 ### This project is using git flow :
 [What and why](http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/ "why git-flow")
@@ -15,9 +15,6 @@ OpenStack keystone front-end
 [Setting up a virtualenv][1]
 
     pip install -r requirements
-
-    bower install
-    npm install
 
 ### Start frontos :
 
