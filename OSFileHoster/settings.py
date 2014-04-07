@@ -51,7 +51,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'openstack_auth',
     'django.contrib.staticfiles',
-    'OSFileHoster.apps.frontks',
+    'OSFileHoster.apps.FileManager',
 )
 
 MIDDLEWARE_CLASSES = (
