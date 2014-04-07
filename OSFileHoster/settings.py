@@ -8,10 +8,25 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
+try:
+   from local_settings import *
+except ImportError, e:
+    print
+    """
+    -------------------------------------------------------------------------
+     You need to create a local_settings.py file which needs to contain at least
+    database connection information.
+
+    Copy local_settings_default.py to local_settings.py and edit it.
+    -------------------------------------------------------------------------
+    """
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
+LOGIN_REDIRECT_URL = "/session_auth_token"
+LOGIN_URL="/login"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -34,8 +49,9 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'openstack_auth',
     'django.contrib.staticfiles',
-    'frontos.apps.frontks',
+    'OSFileHoster.apps.FileManager',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -47,15 +63,18 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'frontos.urls'
+ROOT_URLCONF = 'OSFileHoster.urls'
 
-WSGI_APPLICATION = 'frontos.wsgi.application'
+WSGI_APPLICATION = 'OSFileHoster.wsgi.application'
 
+AUTHENTICATION_BACKENDS = ('openstack_auth.backend.KeystoneBackend',)
+OPENSTACK_KEYSTONE_URL = "http://10.31.92.166:5000/v2.0"
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-DATABASES = {}
+DATABASES = {
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -89,3 +108,6 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates').replace('\\','/'),
 )
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+

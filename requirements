@@ -1,0 +1,5 @@
+Django>=1.5
+djangorestframework
+python-keystoneclient
+python-swiftclient
+django_openstack_auth
