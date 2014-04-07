@@ -1,4 +1,4 @@
-FrontOS
+OSFileHoster
 =======
 OpenStack keystone front-end
 
@@ -8,8 +8,8 @@ OpenStack keystone front-end
 
 ### Dev installation :
 
-    git clone https://github.com/adrien-louis-r/frontos.git
-    cd frontos
+    git clone https://github.com/Ingesup-Lab-OS/OS-FileHoster.git
+    cd OSFileHoster
     git checkout develop
 
 [Setting up a virtualenv][1]
