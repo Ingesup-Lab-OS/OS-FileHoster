@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<form action="/users/new/" method="POST">
+<form action="/user/new/" method="POST">
 	{% csrf_token %}
 	<input type="text" name="username" />
 	<input type="email" name="email" />
