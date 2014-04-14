@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<table class="table">
+	<thead>
+		<th>Name</th>
+		<th>Size</th>
+		<th>Action</th>
+	</thead>
+{% for file in files %}
+	<tr>
+		<td>{{ file.name  }}</td>
+		<td>{{ file.bytes  }}</td>
+		<td><a href="{% url 'os_file_hoster.apps.file_manager.views.file_delete' file.name %}">delete</a></td>
+	</tr>
+{% endfor %}
+{% endblock %}

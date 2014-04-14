@@ -3,5 +3,7 @@ from django.views.generic import TemplateView
 from os_file_hoster.apps.file_manager import views
 
 urlpatterns = patterns('',
-    url(r'^file/upload/$', views.file_upload, name='file_upload'),
+    url(r'^upload/$', views.file_upload, name='file_upload'),
+    url(r'^list/$', views.file_list, name='file_list'),
+    url(r'^delete/(?P<name>.+)/$', views.file_delete, name='file_delete'),
 )
