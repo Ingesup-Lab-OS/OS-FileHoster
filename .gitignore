@@ -42,7 +42,7 @@ Scripts
 .DS_Store
 
 #project specifics
-OSFileHoster/local_settings.py
-OSFileHoster/static/vendors
+os_file_hoster/local_settings.py
+os_file_hoster/static/vendors
 node_modules
 *.sqlite

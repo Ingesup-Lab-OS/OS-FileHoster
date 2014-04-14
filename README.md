@@ -9,7 +9,7 @@ OpenStack one-link file hosting service.
 ### Dev installation :
 
     git clone https://github.com/Ingesup-Lab-OS/OS-FileHoster.git
-    cd OSFileHoster
+    cd os_file_hoster
     git checkout develop
 
 [Setting up a virtualenv][1]

@@ -25,7 +25,7 @@ except ImportError, e:
 import os
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-LOGIN_REDIRECT_URL = "/session_auth_token"
+LOGIN_REDIRECT_URL = "/"
 LOGIN_URL="/login"
 
 # Quick-start development settings - unsuitable for production
@@ -51,7 +51,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'openstack_auth',
     'django.contrib.staticfiles',
-    'OSFileHoster.apps.FileManager',
+    'os_file_hoster.apps.file_manager',
+    'os_file_hoster.apps.user_manager',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -63,9 +64,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'OSFileHoster.urls'
+ROOT_URLCONF = 'os_file_hoster.urls'
 
-WSGI_APPLICATION = 'OSFileHoster.wsgi.application'
+WSGI_APPLICATION = 'os_file_hoster.wsgi.application'
 
 AUTHENTICATION_BACKENDS = ('openstack_auth.backend.KeystoneBackend',)
 OPENSTACK_KEYSTONE_URL = "http://10.31.92.166:5000/v2.0"

@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<form action="/users/new/" method="POST">
+	{% csrf_token %}
+	<input type="text" name="username" />
+	<input type="email" name="email" />
+	<input type="password" name="password" />
+	<input type="submit" value="Submit">
+</form>
+{% endblock %}
