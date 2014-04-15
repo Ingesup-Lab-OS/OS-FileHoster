@@ -5,8 +5,10 @@
 			<nav>
 				<ul class="nav navbar-nav navbar-right">
 					{% if user.is_authenticated %}
+						{%  if request.session.is_admin %}
+						<li><a href="{% url 'os_file_hoster.apps.user_manager.views.user_list' %}">Users</a></li>
+						{% endif %}
 						<li><a href="{% url 'os_file_hoster.apps.file_manager.views.file_list' %}">My files</a></li>
-						<li><a href="{% url 'os_file_hoster.apps.file_manager.views.file_upload' %}">Upload</a></li>
 						<li><a href="{% url 'openstack_auth.views.logout' %}">Logout</a></li>
 					{% else %}
 						<li><a href="{% url 'openstack_auth.views.login' %}">Login</a></li>

@@ -6,10 +6,11 @@ from os_file_hoster.utils.os_helper import KeystoneHelper
 kshelper = KeystoneHelper()
 
 def user_list(request):
-    users = kshelper.get_ksadmin(request).users.list(tenant_id = "6ca0f39be8bc4b208abb4dbd1f9eb1e2")
+    client = kshelper.get_ksadmin(request)
+    ksadmin = kshelper.get_ksadmin_fom_token_id(client.token.id)
+    users = ksadmin.users.list(tenant_id = "6ca0f39be8bc4b208abb4dbd1f9eb1e2")
     user_list = []
     for user in users:
-        # print user._info
         user = {
             "id": user.id,
             "username": user.username,
@@ -34,4 +35,12 @@ def user_new(request):
 
 def user_delete(request, id):
     kshelper.delete_ksuser(id)
-    return HttpResponseRedirect('/');
+    return HttpResponseRedirect(reverse('user_list'))
+
+def set_role(request):
+    roles = request.user.roles
+    if any(role['name'] == 'admin' for role in roles):
+        request.session['is_admin'] = True
+    else:
+        request.session['is_admin'] = False
+    return HttpResponseRedirect('/')
