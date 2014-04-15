@@ -31,6 +31,8 @@ def file_list(request, container = None):
     return render(request, 'file/list.html',  {'files' : new_files, 'form' : form, 'container': container })
 
 def file_delete(request, name, container):
+    if not container:
+        container = request.session.get('user_id')
     ksadmin = kshelper.get_ksadmin(request)
     files = swifthelper.delete_file(ksadmin.token.id, container, name)
-    return HttpResponseRedirect(reverse('file_list'))
+    return HttpResponseRedirect(reverse('file_list', args=[container]))
