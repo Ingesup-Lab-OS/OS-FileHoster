@@ -9,22 +9,28 @@ swifthelper = SwiftHelper()
 kshelper = KeystoneHelper()
 
 def file_upload(request):
+    container = request.POST.get('container', '')
     ksadmin = kshelper.get_ksadmin(request)
-    print request.session.get('user_id')
     if request.method == 'POST':
         for filename, file in request.FILES.iteritems():
-            swifthelper.put_file(ksadmin.token.id, request.session.get('user_id'), request.FILES[filename].name, request.FILES[filename].read())
-        return HttpResponseRedirect(reverse('file_upload'))
+            swifthelper.put_file(ksadmin.token.id, container, request.FILES[filename].name, request.FILES[filename].read())
+        return HttpResponseRedirect(reverse('file_list', args=[container]))
     else:
-        form = UploadFileForm()
-        return render(request, 'file/upload.html',  {'form' : form })
+        return HttpResponseRedirect(reverse('file_list'))
 
-def file_list(request):
+def file_list(request, container = None):
+    if not container:
+        container = request.session.get('user_id')
     ksadmin = kshelper.get_ksadmin(request)
-    files = swifthelper.get_files(ksadmin.token.id, request.session.get('user_id'))
-    return render(request, 'file/list.html',  {'files' : files[1] })
+    files = swifthelper.get_files(ksadmin.token.id, container)
+    new_files = []
+    for cur_file in files[1]:
+        cur_file['url'] = swifthelper.gen_url_for_file(container, cur_file['name'])
+        new_files.append(cur_file)
+    form = UploadFileForm()
+    return render(request, 'file/list.html',  {'files' : new_files, 'form' : form, 'container': container })
 
-def file_delete(request, name):
+def file_delete(request, name, container):
     ksadmin = kshelper.get_ksadmin(request)
-    files = swifthelper.delete_file(ksadmin.token.id, request.session.get('user_id'), name)
+    files = swifthelper.delete_file(ksadmin.token.id, container, name)
     return HttpResponseRedirect(reverse('file_list'))
