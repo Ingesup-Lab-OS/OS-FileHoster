@@ -11,11 +11,18 @@ class KeystoneHelper:
     KEYSTONE_URL  = settings.KEYSTONE_URL
     USERS_TENANT = settings.USERS_TENANT
     ksadmin = None
+    client = None
 
     def get_ksadmin(self, request):
+        if not self.client:
+            self.client = ksclient.Client(
+                username=self.USER,
+                password=self.PASS,
+                tenant_name=self.TENANT_NAME,
+                auth_url=self.KEYSTONE_URL,
+             )
         if not 'ksadmin' in request.session or not request.session['ksadmin']:
             ksadmin = self.set_ksadmin(request)
-            request.session['ksadmin'] = ksadmin
             self.ksadmin = ksadmin
         return self.ksadmin
 
@@ -25,11 +32,7 @@ class KeystoneHelper:
         return ksadmin
 
     def get_ksadmin_fom_token_id(self, token_id):
-        client = self.ksadmin.Client(
-            endpoint=self.KEYSTONE_URL,
-            token=token_id,
-        )
-        return client
+        return self.client
 
     def get_ksadmin_from_credentials(self, username, password):
         ksadmin = self.ksadmin.Client(
@@ -61,7 +64,7 @@ class SwiftHelper:
 
     def put_file(self, auth_token, container, name, content):
         if not self.container_exists(self.SWIFT_URL, auth_token, container):
-            swiftclient.put_container(self.SWIFT_URL, auth_token, container)
+            swiftclient.put_container(self.SWIFT_URL, auth_token, container,  {'X-Container-Read' : '.r:*'})
         args = (self.SWIFT_URL, auth_token, container, name, content)
         swiftclient.put_object(*args)
 
@@ -72,7 +75,12 @@ class SwiftHelper:
             return False
         return True
 
+    def gen_url_for_file(self, container, name):
+        return "%s/%s/%s" % (self.SWIFT_URL, container, name)
+
     def get_files(self, auth_token, container):
+        if not self.container_exists(self.SWIFT_URL, auth_token, container):
+            swiftclient.put_container(self.SWIFT_URL, auth_token, container,  {'X-Container-Read' : '.r:*'})
         return swiftclient.get_container(self.SWIFT_URL, auth_token, container)
 
     def delete_file(self, auth_token, container, name):
