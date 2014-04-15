@@ -44,7 +44,7 @@ class KeystoneHelper:
         return ksadmin
 
     def create_ksuser(self, username, password, email):
-        self.ksadmin.users.create(
+        self.client.users.create(
             name=username,
             password=password,
             email=email,
@@ -53,7 +53,7 @@ class KeystoneHelper:
         )
 
     def delete_ksuser(self, id):
-        self.ksadmin.users.delete(id)
+        self.client.users.delete(id)
 
 class SwiftHelper:
     USER          = settings.KEYSTONE_USER
