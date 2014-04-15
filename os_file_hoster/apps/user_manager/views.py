@@ -2,9 +2,13 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from os_file_hoster.utils.os_helper import KeystoneHelper
+from django.contrib.auth.decorators import login_required
+from os_file_hoster.decorator import admin_required
 
 kshelper = KeystoneHelper()
 
+@login_required
+@admin_required
 def user_list(request):
     client = kshelper.get_ksadmin(request)
     ksadmin = kshelper.get_ksadmin_fom_token_id(client.token.id)
@@ -21,6 +25,7 @@ def user_list(request):
 
     return render(request, 'user/list.html', {'users' : user_list})
 
+@login_required
 def user_new(request):
     if request.method == 'POST':
         kshelper.get_ksadmin(request)
@@ -33,10 +38,12 @@ def user_new(request):
     else:
         return render(request, 'user/new.html')
 
+@login_required
 def user_delete(request, id):
     kshelper.delete_ksuser(id)
     return HttpResponseRedirect(reverse('user_list'))
 
+@login_required
 def set_role(request):
     roles = request.user.roles
     if any(role['name'] == 'admin' for role in roles):

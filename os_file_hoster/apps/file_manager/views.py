@@ -4,10 +4,12 @@ from django.shortcuts import render
 from .forms import UploadFileForm
 from os_file_hoster.utils.os_helper import SwiftHelper
 from os_file_hoster.utils.os_helper import KeystoneHelper
+from django.contrib.auth.decorators import login_required
 
 swifthelper = SwiftHelper()
 kshelper = KeystoneHelper()
 
+@login_required
 def file_upload(request):
     container = request.POST.get('container', '')
     ksadmin = kshelper.get_ksadmin(request)
@@ -18,6 +20,7 @@ def file_upload(request):
     else:
         return HttpResponseRedirect(reverse('file_list'))
 
+@login_required
 def file_list(request, container = None):
     if not container:
         container = request.session.get('user_id')
@@ -30,6 +33,7 @@ def file_list(request, container = None):
     form = UploadFileForm()
     return render(request, 'file/list.html',  {'files' : new_files, 'form' : form, 'container': container })
 
+@login_required
 def file_delete(request, name, container):
     if not container:
         container = request.session.get('user_id')
