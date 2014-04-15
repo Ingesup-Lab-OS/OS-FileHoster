@@ -4,26 +4,27 @@
 {% block content %}
 <div class="jumbotron text-center">
 	{% if user.is_authenticated %}
-		<p>Welcome, {{ user.username }}. Thanks for logging in.</p>
+	<p>Welcome, {{ user.username }}. Thanks for logging in.</p>
 </div>
-		<h3>Infos user</h3>
-		<p>id : {{ user.id }}</p>
-		<p>pk : {{ user.pk }}</p>
-		<p>token : {{ user.token }}</p>
-		<p>username : {{ user.username }}</p>
-		<p>user_domain_id : {{ user.user_domain_id }}</p>
-		<p>domain_id : {{ user.domain_id }}</p>
-		<p>domain_name : {{ user.domain_name }}</p>
-		<p>project_id : {{ user.project_id }}</p>
-		<p>project_name : {{ user.project_name }}</p>
-		<p>service_catalog : {{ user.service_catalog }}</p>
-		<p>roles : {{ user.roles }}</p>
-		<p>endpoint : {{ user.endpoint }}</p>
-		<p>enabled : {{ user.enabled }}</p>
-		<p>tenant_id = {{ user.tenant_id }}</p>
-		<p>tenant_name = {{ user.tenant_name }}</p>
-		<p>token_id = {{ user.token.id }}</p>
+<h3>Infos user</h3>
+	<p>id : {{ user.id }}</p>
+	<p>pk : {{ user.pk }}</p>
+	<p>token : {{ user.token }}</p>
+	<p>username : {{ user.username }}</p>
+	<p>user_domain_id : {{ user.user_domain_id }}</p>
+	<p>domain_id : {{ user.domain_id }}</p>
+	<p>domain_name : {{ user.domain_name }}</p>
+	<p>project_id : {{ user.project_id }}</p>
+	<p>project_name : {{ user.project_name }}</p>
+	<p>service_catalog : {{ user.service_catalog }}</p>
+	<p>roles : {{ user.roles }}</p>
+	<p>endpoint : {{ user.endpoint }}</p>
+	<p>enabled : {{ user.enabled }}</p>
+	<p>tenant_id = {{ user.tenant_id }}</p>
+	<p>tenant_name = {{ user.tenant_name }}</p>
+	<p>token_id = {{ user.token.id }}</p>
 	{% else %}
-		<p>Welcome, new user. Please log in.</p>
+	<p>Welcome, new user. Please log in.</p>
+</div>
 	{% endif %}
 {% endblock %}
