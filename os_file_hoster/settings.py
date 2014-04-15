@@ -25,7 +25,7 @@ except ImportError, e:
 import os
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/user/set_role/"
 LOGIN_URL="/login"
 
 # Quick-start development settings - unsuitable for production
@@ -96,6 +96,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
@@ -112,3 +113,13 @@ TEMPLATE_DIRS = (
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    "django.core.context_processors.request"
+)
