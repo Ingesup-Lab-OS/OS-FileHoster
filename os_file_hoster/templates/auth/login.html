@@ -2,9 +2,18 @@
 {% block title %}{{ block.super }} | Login {% endblock %}
 
 {% block content %}
-<form action="/login/" method="POST">
+<form action="/login/" method="POST" class="col-md-6 col-md-offset-3">
 	{% csrf_token %}
-	{{ form.as_p }}
+	<div class="form-group">
+		{{ form.username.errors }}
+		<label for="username">Username</label>
+		<input type="text" name ="username" class="form-control" id="username" placeholder="Enter username">
+
+		{{ form.password.errors }}
+		<label for="password">Password</label>
+		<input type="password" name ="password" class="form-control" id="password">
+
+		{{ form.region }}
 	<input type="submit" value="Submit">
 </form>
 {% endblock %}
