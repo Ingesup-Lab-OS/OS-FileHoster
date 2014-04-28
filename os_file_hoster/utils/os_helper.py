@@ -10,67 +10,51 @@ class KeystoneHelper:
     TENANT_NAME   = settings.KEYSTONE_TENANT
     KEYSTONE_URL  = settings.KEYSTONE_URL
     USERS_TENANT = settings.USERS_TENANT
-    ksadmin = None
-    client = None
 
-    def get_ksadmin(self, request):
-        if not self.client:
-            self.client = ksclient.Client(
-                username=self.USER,
-                password=self.PASS,
-                tenant_name=self.TENANT_NAME,
-                auth_url=self.KEYSTONE_URL,
-             )
-        if not 'ksadmin' in request.session or not request.session['ksadmin']:
-            ksadmin = self.set_ksadmin(request)
-            self.ksadmin = ksadmin
-        return self.ksadmin
-
-    def set_ksadmin(self, request):
-        backend = KeystoneBackend()
-        ksadmin = backend.authenticate(request, self.USER, self.PASS, 'Default', self.KEYSTONE_URL)
-        return ksadmin
-
-    def get_ksadmin_fom_token_id(self, token_id):
-        return self.client
-
-    def get_ksadmin_from_credentials(self, username, password):
-        ksadmin = self.ksadmin.Client(
-            username=username,
-            password=password,
+    def __init__(self):
+        self._ksclient = ksclient.Client(
+            username=self.USER,
+            password=self.PASS,
             tenant_name=self.TENANT_NAME,
-            auth_url=self.KEYSTONE_URL,
-         )
-        return ksadmin
+            auth_url=self.KEYSTONE_URL)
+
+    def get_ksclient(self):
+        return self._ksclient
 
     def create_ksuser(self, username, password, email):
-        self.client.users.create(
+        self._ksclient.users.create(
             name=username,
             password=password,
             email=email,
             tenant_id="6ca0f39be8bc4b208abb4dbd1f9eb1e2",
-            enabled=True,
-        )
+            enabled=True)
 
     def delete_ksuser(self, id):
-        self.client.users.delete(id)
+        self._ksclient.users.delete(id)
 
-class SwiftHelper:
+class SwiftHelper():
     USER          = settings.KEYSTONE_USER
     PASS          = settings.KEYSTONE_PASS
     TENANT_NAME   = settings.KEYSTONE_TENANT
     SWIFT_URL  = settings.SWIFT_URL
     KEYSTONE_URL  = settings.KEYSTONE_URL
 
-    def put_file(self, auth_token, container, name, content):
-        if not self.container_exists(self.SWIFT_URL, auth_token, container):
-            swiftclient.put_container(self.SWIFT_URL, auth_token, container,  {'X-Container-Read' : '.r:*'})
-        args = (self.SWIFT_URL, auth_token, container, name, content)
-        swiftclient.put_object(*args)
+    def __init__(self):
+        self._connection = swiftclient.Connection(
+        authurl=self.KEYSTONE_URL,
+        auth_version=2,
+        user=self.USER,
+        key=self.PASS,
+        tenant_name="filehoster_users")
 
-    def container_exists(self, url, auth_token, container):
+    def put_file(self, container, name, content):
+        if not self.container_exists(container):
+            self._connection.put_container(container,  {'X-Container-Read' : '.r:*'})
+        self._connection.put_object(container, name, content)
+
+    def container_exists(self, container):
         try:
-            swiftclient.head_container(url, auth_token, container)
+            self._connection.head_container(container)
         except swiftclient.ClientException:
             return False
         return True
@@ -78,10 +62,10 @@ class SwiftHelper:
     def gen_url_for_file(self, container, name):
         return "%s/%s/%s" % (self.SWIFT_URL, container, name)
 
-    def get_files(self, auth_token, container):
-        if not self.container_exists(self.SWIFT_URL, auth_token, container):
-            swiftclient.put_container(self.SWIFT_URL, auth_token, container,  {'X-Container-Read' : '.r:*'})
-        return swiftclient.get_container(self.SWIFT_URL, auth_token, container)
+    def get_files(self, container):
+        if not self.container_exists(container):
+            self._connection.put_container(container,  {'X-Container-Read' : '.r:*'})
+        return self._connection.get_container(container)
 
-    def delete_file(self, auth_token, container, name):
-        return swiftclient.delete_object(self.SWIFT_URL, auth_token, container, name)
+    def delete_file(self, container, name):
+        return self.connection.delete_object(container, name)

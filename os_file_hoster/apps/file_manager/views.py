@@ -12,10 +12,9 @@ kshelper = KeystoneHelper()
 @login_required
 def file_upload(request):
     container = request.POST.get('container', '')
-    ksadmin = kshelper.get_ksadmin(request)
     if request.method == 'POST':
         for filename, file in request.FILES.iteritems():
-            swifthelper.put_file(ksadmin.token.id, container, request.FILES[filename].name, request.FILES[filename].read())
+            swifthelper.put_file(container, request.FILES[filename].name, request.FILES[filename].read())
         return HttpResponseRedirect(reverse('file_list', args=[container]))
     else:
         return HttpResponseRedirect(reverse('file_list'))
@@ -24,8 +23,7 @@ def file_upload(request):
 def file_list(request, container = None):
     if not container:
         container = request.session.get('user_id')
-    ksadmin = kshelper.get_ksadmin(request)
-    files = swifthelper.get_files(ksadmin.token.id, container)
+    files = swifthelper.get_files(container)
     new_files = []
     for cur_file in files[1]:
         cur_file['url'] = swifthelper.gen_url_for_file(container, cur_file['name'])
@@ -37,6 +35,5 @@ def file_list(request, container = None):
 def file_delete(request, name, container):
     if not container:
         container = request.session.get('user_id')
-    ksadmin = kshelper.get_ksadmin(request)
-    files = swifthelper.delete_file(ksadmin.token.id, container, name)
+    files = swifthelper.delete_file(container, name)
     return HttpResponseRedirect(reverse('file_list', args=[container]))

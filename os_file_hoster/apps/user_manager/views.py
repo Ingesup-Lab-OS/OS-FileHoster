@@ -10,9 +10,7 @@ kshelper = KeystoneHelper()
 @login_required
 @admin_required
 def user_list(request):
-    client = kshelper.get_ksadmin(request)
-    ksadmin = kshelper.get_ksadmin_fom_token_id(client.token.id)
-    users = ksadmin.users.list(tenant_id = "6ca0f39be8bc4b208abb4dbd1f9eb1e2")
+    users = kshelper.get_ksclient().users.list(tenant_id = "6ca0f39be8bc4b208abb4dbd1f9eb1e2")
     user_list = []
     for user in users:
         user = {
@@ -26,19 +24,19 @@ def user_list(request):
     return render(request, 'user/list.html', {'users' : user_list})
 
 @login_required
+@admin_required
 def user_new(request):
     if request.method == 'POST':
-        kshelper.get_ksadmin(request)
         user = request.POST.get('username', '')
         password = request.POST.get('password', '')
         email = request.POST.get('email', '')
-
         kshelper.create_ksuser(user, password, email)
         return HttpResponseRedirect(reverse('user_list'))
     else:
         return render(request, 'user/new.html')
 
 @login_required
+@admin_required
 def user_delete(request, id):
     kshelper.delete_ksuser(id)
     return HttpResponseRedirect(reverse('user_list'))
