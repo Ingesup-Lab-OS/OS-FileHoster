@@ -11,16 +11,16 @@ kshelper = KeystoneHelper()
 @admin_required
 def user_list(request):
     users = kshelper.get_ksclient().users.list(tenant_id = "6ca0f39be8bc4b208abb4dbd1f9eb1e2")
-    user_list = []
+    user_list = {}
     for user in users:
-        user = {
+        user_item = {
             "id": user.id,
             "username": user.username,
             "name": user.name,
             "enabled": user.enabled
         }
-        user_list.append(user)
-
+        dicto = {user.id: user_item}
+        user_list.update(dicto)
     return render(request, 'user/list.html', {'users' : user_list})
 
 @login_required

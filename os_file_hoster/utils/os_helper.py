@@ -7,15 +7,16 @@ from openstack_auth.backend import KeystoneBackend
 class KeystoneHelper:
     USER          = settings.KEYSTONE_USER
     PASS          = settings.KEYSTONE_PASS
-    TENANT_NAME   = settings.KEYSTONE_TENANT
+    USERS_TENANT   = settings.USERS_TENANT
     KEYSTONE_URL  = settings.KEYSTONE_URL
-    USERS_TENANT = settings.USERS_TENANT
+    USERS_TENANT  = settings.USERS_TENANT
+    APP_TENANT_ID = settings.APP_TENANT_ID
 
     def __init__(self):
         self._ksclient = ksclient.Client(
             username=self.USER,
             password=self.PASS,
-            tenant_name=self.TENANT_NAME,
+            tenant_name=self.USERS_TENANT,
             auth_url=self.KEYSTONE_URL)
 
     def get_ksclient(self):
@@ -26,7 +27,7 @@ class KeystoneHelper:
             name=username,
             password=password,
             email=email,
-            tenant_id="6ca0f39be8bc4b208abb4dbd1f9eb1e2",
+            tenant_id=self.APP_TENANT_ID,
             enabled=True)
 
     def delete_ksuser(self, id):
@@ -68,4 +69,4 @@ class SwiftHelper():
         return self._connection.get_container(container)
 
     def delete_file(self, container, name):
-        return self.connection.delete_object(container, name)
+        return self._connection.delete_object(container, name)
